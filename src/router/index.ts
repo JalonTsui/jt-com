@@ -1,4 +1,9 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import {
+  createRouter,
+  createWebHistory,
+  RouteRecordRaw,
+  createWebHashHistory,
+} from "vue-router";
 import FactoryRoute from "./routes/factoryRoute";
 
 /**
@@ -68,8 +73,13 @@ const routes: RouteRecordRaw[] = [
   },
   ...FactoryRoute,
 ];
+
+const { PACKAGE_BASE_URL } = import.meta.env;
+
+const isHash = PACKAGE_BASE_URL === "true";
+
 const router = createRouter({
-  history: createWebHistory(),
+  history: isHash ? createWebHashHistory() : createWebHistory(),
   routes,
 });
 export default router;

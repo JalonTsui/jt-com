@@ -10,5 +10,10 @@ const factoryRoute: RouteRecordRaw[] = [
     name: "test2",
     component: () => import("@/view/common/test2.vue"),
   },
+  {
+    path: "/test3",
+    name: "test3",
+    component: () => import("@/view/common/test3.vue"),
+  },
 ];
 export default factoryRoute;
