@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from "vite";
+import { BuildOptions, defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
 import AutoImport from "unplugin-auto-import/vite";
@@ -11,7 +11,29 @@ export default defineConfig(({ mode }) => {
   // 获取需要的环境变量
   const env = loadEnv(mode, process.cwd(), "");
   const { PACKAGE_BASE_URL } = env;
-  console.log("PACKAGE_BASE_URL===>>>", PACKAGE_BASE_URL);
+  const build: BuildOptions = {
+    rollupOptions: {
+      // 打包分割node_modules里面的代码，让单个包不至于太大
+      // manualChunks(id) {
+      //   if (id.includes("node_modules")) {
+      //     return id
+      //       .toString()
+      //       .split("node_modules/")[1]
+      //       .split("/")[0]
+      //       .toString();
+      //   }
+      // },
+      input: {
+        index: resolve(__dirname, "index.html"),
+        about: resolve(__dirname, "about.html"),
+      },
+      output: {
+        chunkFileNames: "static/js/[name]-[hash].js",
+        entryFileNames: "static/js/[name]-[hash].js",
+        assetFileNames: "static/[ext]/name-[hash].[ext]",
+      },
+    },
+  };
   return {
     base: PACKAGE_BASE_URL,
     plugins: [
@@ -39,5 +61,6 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
+    build,
   };
 });
