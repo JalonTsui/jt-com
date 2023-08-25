@@ -74,9 +74,8 @@ const routes: RouteRecordRaw[] = [
   ...FactoryRoute,
 ];
 
-const { PACKAGE_BASE_URL } = import.meta.env;
-
-const isHash = PACKAGE_BASE_URL === "true";
+const { VITE_NEED_HASH_ROUTE } = import.meta.env;
+const isHash = VITE_NEED_HASH_ROUTE === "true";
 
 const router = createRouter({
   history: isHash ? createWebHashHistory() : createWebHistory(),

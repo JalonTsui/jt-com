@@ -5,7 +5,6 @@
 // 4.要求界面切换连贯，动画流畅。
 // 5.请保证视觉效果的还原度以及代码整洁度。
 import { ref, onMounted } from "vue";
-import FormItem from "@/components/test3/FormItem.vue";
 
 const isRotate = ref(false);
 const isShowRoutate = ref(true);
@@ -32,42 +31,97 @@ function stopAnimation(time: number, next?: Function) {
 </script>
 <template>
   <div class="layout">
-    <div class="a_container" v-if="isShowRoutate">
+    <div class="a_container c_width" v-if="isShowRoutate">
       <img
+        style="width: 100%"
         :class="{ a_rotate: isRotate }"
         src="@/assets/test3/loto-p.png"
         alt="test3"
       />
       <img class="a_pointer" src="@/assets/test3/loto-z.png" alt="test3" />
     </div>
-    <div class="form_container" v-if="!isShowRoutate">
-      <FormItem place-holder="收货人姓名" label="收货人姓名"></FormItem>
-      <FormItem place-holder="请输入您的手机号码" label="手机号码"></FormItem>
-      <FormItem label="手机验证码" place-holder="">
-        <input type="text" placeholder="手机验证码" />
-        <button class="btn_normal">获取验证码</button>
-      </FormItem>
-      <FormItem label="选择地区" place-holder=""> </FormItem>
-      <FormItem label="详细地址" place-holder="例如XX街道XX号"> </FormItem>
-      <button class="btn_normal">提交订单</button>
+    <div class="form_container c_width" v-if="!isShowRoutate">
+      <ElForm label-position="top">
+        <el-form-item label="收货人姓名">
+          <el-input placeholder="收货人姓名" class="d_input"></el-input>
+        </el-form-item>
+        <el-form-item label="手机号码">
+          <el-input placeholder="请输入您的手机号码" class="d_input"></el-input>
+        </el-form-item>
+        <el-form-item label="手机验证码">
+          <div style="display: flex; width: 100%">
+            <el-input
+              style="margin-right: 10px"
+              placeholder="手机验证码"
+              class="d_input"
+            ></el-input>
+            <el-button class="d_input b_width b_btn">获取验证码</el-button>
+          </div>
+        </el-form-item>
+        <el-form-item label="选择地区">
+          <el-input class="d_input"></el-input>
+          <div style="height: 5px; width: 100%"></div>
+          <el-input class="d_input"></el-input>
+        </el-form-item>
+        <el-form-item label="详细地址">
+          <el-input placeholder="例如XX街道XX号" class="d_input"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button class="d_input b_width b_btn">提交订单</el-button>
+        </el-form-item>
+      </ElForm>
     </div>
   </div>
 </template>
 <style scoped lang="scss">
-.btn_normal {
-  background-color: $fm_btn;
-  color: white;
-  border: $fm_border;
+@media only screen and (max-width: 1200px) {
+  .c_width {
+    width: 432px !important;
+  }
+  .a_pointer {
+    width: 300px !important;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .c_width {
+    width: 332px !important;
+  }
+  .a_pointer {
+    width: 200px !important;
+  }
 }
 .layout {
   display: flex;
   justify-content: center;
+  .a_container {
+    position: relative;
+    overflow: hidden;
+  }
+  .form_container {
+    .d_input {
+      height: 40px;
+    }
+    .b_width {
+      width: 100%;
+    }
+    :deep(.el-form-item__label) {
+      margin-bottom: 2px;
+    }
+    :deep(.el-form-item) {
+      margin-bottom: 2px !important;
+    }
+    .b_btn {
+      background-color: $fm_btn;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
 }
-img {
-  display: block;
-}
-.a_container {
-  position: relative;
+.c_width {
   width: 532px;
 }
 .a_pointer {
@@ -77,6 +131,7 @@ img {
   top: 0;
   bottom: 0;
   margin: auto;
+  width: 400px;
 }
 // 旋转动画
 .a_rotate {
