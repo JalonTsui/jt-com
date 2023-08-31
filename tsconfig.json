@@ -37,6 +37,10 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
+    "src_about/**/*.ts",
+    "src_about/**/*.d.ts",
+    "src_about/**/*.tsx",
+    "src_about/**/*.vue",
   ],
   "references": [
     {

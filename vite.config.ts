@@ -11,7 +11,20 @@ export default defineConfig(({ mode }) => {
   // 获取需要的环境变量
   const env = loadEnv(mode, process.cwd(), "");
   const { PACKAGE_BASE_URL } = env;
+
+  // 生产环境打包配置
+  const prodBuildOptions: BuildOptions = {
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
+  };
+
+  // 公共打包配置
   const build: BuildOptions = {
+    minify: "terser",
     rollupOptions: {
       // 打包分割node_modules里面的代码，让单个包不至于太大
       // manualChunks(id) {
@@ -24,16 +37,35 @@ export default defineConfig(({ mode }) => {
       //   }
       // },
       input: {
-        index: resolve(__dirname, "index.html"),
-        about: resolve(__dirname, "about.html"),
+        index: resolve(__dirname, "entry/index.html"),
+        // about: resolve(__dirname, "entry/about.html"),
       },
       output: {
-        chunkFileNames: "static/js/[name]-[hash].js",
-        entryFileNames: "static/js/[name]-[hash].js",
+        // TODO: 把html分开打包成一个独立文件
+        compact: true,
+        chunkFileNames: (_info: any) => {
+          // console.log(info);
+          return "static/js/[name]-[hash].js";
+        },
+        entryFileNames: (_info: any) => {
+          // console.log(info);
+          return "static/js/[name]-[hash].js";
+        },
         assetFileNames: "static/[ext]/name-[hash].[ext]",
       },
     },
   };
+
+  switch (mode) {
+    case "production":
+      Object.assign(build, prodBuildOptions);
+      break;
+    case "test":
+      break;
+    default:
+      break;
+  }
+
   return {
     base: PACKAGE_BASE_URL,
     plugins: [
