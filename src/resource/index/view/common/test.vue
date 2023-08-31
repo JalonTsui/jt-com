@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatFlatteningRoutes, formatTwoStageRoutes } from "@/router/index";
+import { formatFlatteningRoutes, formatTwoStageRoutes } from "i@/router/index";
 const arr = [
   {
     path: "/",

@@ -28,6 +28,12 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "i@/*": [
+        "src/resource/index/*"
+      ],
+      "a@/*": [
+        "src/resource/about/*"
       ]
     }
   },
@@ -37,10 +43,6 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "src_about/**/*.ts",
-    "src_about/**/*.d.ts",
-    "src_about/**/*.tsx",
-    "src_about/**/*.vue",
   ],
   "references": [
     {

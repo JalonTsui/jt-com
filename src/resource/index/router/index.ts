@@ -5,6 +5,7 @@ import {
   createWebHashHistory,
 } from "vue-router";
 import FactoryRoute from "./routes/factoryRoute";
+import bootstrapRoute from "./routes/bootstrap";
 
 /**
  * 路由多级嵌套数组处理成一维数组
@@ -69,9 +70,10 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/",
     name: "layout",
-    component: () => import("@/layout/index.vue"),
+    component: () => import("i@/layout/index.vue"),
   },
   ...FactoryRoute,
+  ...bootstrapRoute,
 ];
 
 const { VITE_NEED_HASH_ROUTE } = import.meta.env;

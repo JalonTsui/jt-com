@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import FactoryRoutes from "@/router/routes/factoryRoute";
+import FactoryRoutes from "i@/router/routes/factoryRoute";
+import BootstrapRoutes from "i@/router/routes/bootstrap";
 import { getRandomRGB } from "@/utils/common";
 import { CSSProperties } from "vue";
-const colorList = FactoryRoutes.map(() => {
+const newList = [...FactoryRoutes, ...BootstrapRoutes];
+const colorList = newList.map(() => {
   return getRandomRGB(0.7);
 });
 
@@ -17,7 +19,7 @@ function getItemStyle(index: number): CSSProperties {
     <div
       class="item"
       :style="getItemStyle(index)"
-      v-for="(item, index) in FactoryRoutes"
+      v-for="(item, index) in newList"
       :key="item.path"
       @click="$router.push({ name: item.name })"
     >

@@ -1,4 +1,4 @@
-import { BuildOptions, defineConfig, loadEnv } from "vite";
+import { BuildOptions, defineConfig, loadEnv, ServerOptions } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
 import AutoImport from "unplugin-auto-import/vite";
@@ -37,8 +37,8 @@ export default defineConfig(({ mode }) => {
       //   }
       // },
       input: {
-        index: resolve(__dirname, "entry/index.html"),
-        // about: resolve(__dirname, "entry/about.html"),
+        index: resolve(__dirname, "src/entry/index.html"),
+        about: resolve(__dirname, "src/entry/about.html"),
       },
       output: {
         // TODO: 把html分开打包成一个独立文件
@@ -66,6 +66,14 @@ export default defineConfig(({ mode }) => {
       break;
   }
 
+  // 配置开发环境下的server,当server的open设置的时候，package.json里面的--open需要取消，否则无法正常使用
+  const server: ServerOptions = {
+    host: "0.0.0.0",
+    port: 8787,
+    strictPort: true,
+    open: "/src/entry/index.html",
+  };
+
   return {
     base: PACKAGE_BASE_URL,
     plugins: [
@@ -84,6 +92,9 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": resolve(__dirname, "src"),
+        "i@": resolve(__dirname, "src/resource/index"),
+        "a@": resolve(__dirname, "src/resource/about"),
+        "~bootstrap": resolve(__dirname, "node_modules/bootstrap"),
       },
     },
     css: {
@@ -94,5 +105,6 @@ export default defineConfig(({ mode }) => {
       },
     },
     build,
+    server,
   };
 });
