@@ -4,6 +4,7 @@ import { resolve } from "path";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import { extractFileNameWithoutExtension as _getFileName } from "./utils";
 import legacy from "@vitejs/plugin-legacy";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -23,6 +24,7 @@ export default defineConfig(({ mode }) => {
   };
 
   // 公共打包配置
+  // 打包的时候public文件夹下面的文件会自动打包到dist文件夹下
   const build: BuildOptions = {
     minify: "terser",
     rollupOptions: {
@@ -38,20 +40,41 @@ export default defineConfig(({ mode }) => {
       // },
       input: {
         index: resolve(__dirname, "src/entry/index.html"),
-        about: resolve(__dirname, "src/entry/about.html"),
+        // about: resolve(__dirname, "src/entry/about.html"),
       },
       output: {
         // TODO: 把html分开打包成一个独立文件
         compact: true,
+        // 静态文件不一定会有引用路径即moduleIds
         chunkFileNames: (_info: any) => {
-          // console.log(info);
-          return "static/js/[name]-[hash].js";
+          return "share/js/[name]-[hash].js";
+          // console.log("chunk", _info);
+          // const resourceList = _info.moduleIds;
+          // const rootName =
+          //   resourceList && resourceList.length
+          //     ? getFileName(resourceList[resourceList.length - 1])
+          //     : false;
+          // if (!rootName) {
+          //   return "share/js/[name]-[hash].js";
+          // }
+          // return `${rootName}/js/[name]-[hash].js`;
         },
         entryFileNames: (_info: any) => {
-          // console.log(info);
-          return "static/js/[name]-[hash].js";
+          return "share/js/[name]-[hash].js";
+          // console.log("entry", _info);
+          // const resourceList = _info.moduleIds;
+          // const rootName =
+          //   resourceList && resourceList.length
+          //     ? getFileName(resourceList[resourceList.length - 1])
+          //     : false;
+          // if (!rootName) {
+          //   return "share/js/[name]-[hash].js";
+          // }
+          // return `${rootName}/js/[name]-[hash].js`;
         },
-        assetFileNames: "static/[ext]/name-[hash].[ext]",
+        assetFileNames: (_info: any) => {
+          return "share/[ext]/[name]-[hash].[ext]";
+        },
       },
     },
   };
