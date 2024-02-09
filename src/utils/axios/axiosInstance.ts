@@ -25,6 +25,9 @@ class Instance {
     static #initRequestInterceptors() {
         this.INSTANCE.interceptors.request.use((req) => {
             return req;
+        }, (err) => {
+            console.log("axios request interceptors error");
+            console.log(err);
         });
     }
 
@@ -34,6 +37,9 @@ class Instance {
     static #initResponseInterceptors() {
         this.INSTANCE.interceptors.response.use((res) => {
             return res;
+        }, (err) => {
+            console.log("axios response interceptors error");
+            console.log(err);
         });
     }
 }
