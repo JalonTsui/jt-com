@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
   console.log("当前环境是:", mode);
   // 获取需要的环境变量
   const env = loadEnv(mode, process.cwd(), "");
-  const {} = env;
+  const { } = env;
   return {
     plugins: [
       vue(),
@@ -33,5 +33,14 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
+    server: {
+      proxy: {
+        "/api": {
+          target: "http://127.0.0.1:8080",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ""),
+        }
+      }
+    }
   };
 });
