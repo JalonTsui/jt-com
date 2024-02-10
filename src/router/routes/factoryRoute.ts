@@ -14,6 +14,11 @@ const factoryRoute: RouteRecordRaw[] = [
     path: "/test3",
     name: "test3",
     component: () => import("@/view/test/testAxios.vue"),
+  },
+  {
+    path: "/test4",
+    name: "test4",
+    component: () => import("@/view/test/computed.vue"),
   }
 ];
 export default factoryRoute;
