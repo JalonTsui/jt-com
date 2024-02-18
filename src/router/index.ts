@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import FactoryRoute from "./routes/factoryRoute";
+// import FactoryRoute from "./routes/factoryRoute";
 
 /**
  * 路由多级嵌套数组处理成一维数组
@@ -64,9 +64,8 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/",
     name: "layout",
-    component: () => import("@/layout/index.vue"),
-  },
-  ...FactoryRoute,
+    component: () => import("@/layout/index.vue")
+  }
 ];
 const router = createRouter({
   history: createWebHistory(),
